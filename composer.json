@@ -1,0 +1,75 @@
+{
+    "name": "riobet/accesskey",
+    "description": "Пакет ограничения доступа к API по ключу",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Peredelskiy Aleksey",
+            "email": "alexey.peredelskiy@riobet.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^10.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Riobet\\AccessKey\\App\\": "src/app"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.2",
+        "phpunit/phpunit": "^9.0",
+        "orchestra/testbench": "^8.23",
+        "laravel/pint": "^1.16"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Riobet\\AccessKey\\App\\AccessKeyServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-merge": "composer install",
+        "check-style": "vendor/bin/pint --test",
+        "fix-style": "vendor/bin/pint",
+        "test": "phpunit --colors",
+        "phpstan": "phpstan analyse",
+        "psalm": "psalm --show-info=true --no-cache",
+        "psalm-fix": "psalm --no-cache --alter --issues=MissingReturnType,MissingParamType",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests.",
+        "check-style": "Run style checks (only dry run - no fixing!).",
+        "fix-style": "Run style checks and fix violations."
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
+    }
+}
